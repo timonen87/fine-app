@@ -19,7 +19,7 @@ const env = process.env;
 
 AFFiNE.metrics.enabled = !AFFiNE.node.test;
 
-if (env.R2_OBJECT_STORAGE_ACCOUNT_ID) {
+if (env.VK_S3_ACCOUNT === 'true') {
   AFFiNE.use('cloudflare-r2', {
     region: env.REGIONAL_VK_S3_ACCOUNT,
     credentials: {
@@ -30,20 +30,20 @@ if (env.R2_OBJECT_STORAGE_ACCOUNT_ID) {
   AFFiNE.storages.avatar.provider = 'cloudflare-r2';
   AFFiNE.storages.avatar.bucket = 'fine-app';
   AFFiNE.storages.avatar.publicLinkFactory = key =>
-    `https://avatar.affineassets.com/${key}`;
+    `https://avatar.finaneapp.pro/${key}`;
 
   AFFiNE.storages.blob.provider = 'cloudflare-r2';
-  AFFiNE.storages.blob.bucket = `workspace-blobs-${
-    AFFiNE.affine.canary ? 'canary' : 'prod'
-  }`;
+  // AFFiNE.storages.blob.bucket = `workspace-blobs-${
+  //   AFFiNE.affine.canary ? 'canary' : 'prod'
+  // }`;
   AFFiNE.storages.blob.bucket = 'fine-app';
 
-  AFFiNE.use('copilot', {
-    storage: {
-      provider: 'cloudflare-r2',
-      bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
-    },
-  });
+  // AFFiNE.use('copilot', {
+  //   storage: {
+  //     provider: 'cloudflare-r2',
+  //     bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
+  //   },
+  // });
 }
 
 AFFiNE.use('copilot', {

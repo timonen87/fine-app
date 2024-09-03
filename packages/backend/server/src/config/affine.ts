@@ -106,13 +106,13 @@ AFFiNE.server.port = 3010;
 //
 // /* Cloudflare R2 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in Cloudflare R2 Storage Service */
-// AFFiNE.use('cloudflare-r2', {
-//   accountId: '',
-//   credentials: {
-//     accessKeyId: '',
-//     secretAccessKey: '',
-//   },
-// });
+AFFiNE.use('cloudflare-r2', {
+  region: '',
+  credentials: {
+    accessKeyId: '',
+    secretAccessKey: '',
+  },
+});
 //
 // /* AWS S3 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in AWS S3 Storage Service */

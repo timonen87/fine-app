@@ -40,6 +40,7 @@ services:
       - MAILER_SENDER=timonen.as@gmail.com
       - MAILER_SECURE=true
 
+      - VK_S3_ACCOUNT=1
       - R2_ACCESS_KEY_ID=g9qBxGAaJkPWLHwnGGb1sP
       - R2_SECRET_ACCESS_KEY=Hn1VTjmwGAhMpWBhW5YFSGjnGsQUgwQnirUJ1p4LBRL
       - REGIONAL_VK_S3_ACCOUNT=ru-msk
