@@ -21,14 +21,14 @@ AFFiNE.metrics.enabled = !AFFiNE.node.test;
 
 if (env.R2_OBJECT_STORAGE_ACCOUNT_ID) {
   AFFiNE.use('cloudflare-r2', {
-    accountId: env.R2_OBJECT_STORAGE_ACCOUNT_ID,
+    region: env.REGIONAL_VK_S3_ACCOUNT,
     credentials: {
       accessKeyId: env.R2_OBJECT_STORAGE_ACCESS_KEY_ID!,
       secretAccessKey: env.R2_OBJECT_STORAGE_SECRET_ACCESS_KEY!,
     },
   });
   AFFiNE.storages.avatar.provider = 'cloudflare-r2';
-  AFFiNE.storages.avatar.bucket = 'account-avatar';
+  AFFiNE.storages.avatar.bucket = 'fine-app';
   AFFiNE.storages.avatar.publicLinkFactory = key =>
     `https://avatar.affineassets.com/${key}`;
 
@@ -36,6 +36,7 @@ if (env.R2_OBJECT_STORAGE_ACCOUNT_ID) {
   AFFiNE.storages.blob.bucket = `workspace-blobs-${
     AFFiNE.affine.canary ? 'canary' : 'prod'
   }`;
+  AFFiNE.storages.blob.bucket = 'fine-app';
 
   AFFiNE.use('copilot', {
     storage: {

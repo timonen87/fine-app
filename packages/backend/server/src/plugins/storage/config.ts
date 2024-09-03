@@ -13,7 +13,7 @@ declare module '../../fundamentals/storage/config' {
 
 export type S3StorageConfig = S3ClientConfigType;
 export type R2StorageConfig = S3ClientConfigType & {
-  accountId?: string;
+  region?: string;
 };
 
 declare module '../config' {

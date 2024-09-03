@@ -9,12 +9,12 @@ export class R2StorageProvider extends S3StorageProvider {
   override readonly type = 'cloudflare-r2' as any /* cast 'r2' to 's3' */;
 
   constructor(config: R2StorageConfig, bucket: string) {
-    assert(config.accountId, 'accountId is required for R2 storage provider');
+    assert(config.region, 'region is required for VK S3 storage provider');
     super(
       {
         ...config,
         forcePathStyle: true,
-        endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+        endpoint: 'https://fine-app.hb.ru-msk.vkcloud-storage.ru',
       },
       bucket
     );
