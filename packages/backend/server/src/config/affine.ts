@@ -109,26 +109,25 @@ AFFiNE.graphql = {
 // /* Cloudflare R2 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in Cloudflare R2 Storage Service */
 if (env.R2_ACCESS_KEY_ID) {
-  AFFiNE.use('cloudflare-r2', {
-    region: env.REGIONAL_VK_S3_ACCOUNT!,
+  AFFiNE.use('aws-s3', {
     credentials: {
       accessKeyId: env.R2_ACCESS_KEY_ID!,
       secretAccessKey: env.R2_SECRET_ACCESS_KEY!,
     },
   });
-  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+  AFFiNE.storages.avatar.provider = 'aws-s3';
   AFFiNE.storages.avatar.bucket = 'fine-app';
-  AFFiNE.storages.avatar.publicLinkFactory = key =>
-    `https://avatar.appfine.pro/${key}`;
+  // AFFiNE.storages.avatar.publicLinkFactory = key =>
+  //   `https://avatar.appfine.pro/${key}`;
 
-  AFFiNE.storages.blob.provider = 'cloudflare-r2';
+  AFFiNE.storages.blob.provider = 'aws-s3';
   AFFiNE.storages.blob.bucket = `workspace-blobs-${
     AFFiNE.affine.canary ? 'canary' : 'prod'
   }`;
 
   AFFiNE.use('copilot', {
     storage: {
-      provider: 'cloudflare-r2',
+      provider: 'aws-s3',
       bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
     },
   });

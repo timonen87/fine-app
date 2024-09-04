@@ -14,6 +14,7 @@ export class R2StorageProvider extends S3StorageProvider {
       {
         ...config,
         endpoint: 'https://fine-app.hb.ru-msk.vkcloud-storage.ru',
+        region: config.region,
       },
       bucket
     );
