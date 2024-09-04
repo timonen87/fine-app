@@ -114,34 +114,30 @@ AFFiNE.server.path = '/affine';
 //   },
 // });
 
-AFFiNE.metrics.enabled = !AFFiNE.node.test;
+AFFiNE.use('cloudflare-r2', {
+  region: 'ru-msk',
+  credentials: {
+    accessKeyId: 'g9qBxGAaJkPWLHwnGGb1sP',
+    secretAccessKey: 'Hn1VTjmwGAhMpWBhW5YFSGjnGsQUgwQnirUJ1p4LBRL',
+  },
+});
+AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+AFFiNE.storages.avatar.bucket = 'fine-app';
+AFFiNE.storages.avatar.publicLinkFactory = key =>
+  `https://avatar.fineapp.pro/${key}`;
 
-if (env.R2_ACCESS_KEY_ID) {
-  AFFiNE.use('cloudflare-r2', {
-    region: env.REGIONAL_VK_S3_ACCOUNT,
-    credentials: {
-      accessKeyId: env.R2_ACCESS_KEY_ID!,
-      secretAccessKey: env.R2_SECRET_ACCESS_KEY!,
-    },
-  });
-  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
-  AFFiNE.storages.avatar.bucket = 'fine-app';
-  AFFiNE.storages.avatar.publicLinkFactory = key =>
-    `https://avatar.fineapp.pro/${key}`;
+AFFiNE.storages.blob.provider = 'cloudflare-r2';
+// AFFiNE.storages.blob.bucket = `workspace-blobs-${
+//   AFFiNE.affine.canary ? 'canary' : 'prod'
+// }`;
+AFFiNE.storages.blob.bucket = 'fine-app';
 
-  AFFiNE.storages.blob.provider = 'cloudflare-r2';
-  // AFFiNE.storages.blob.bucket = `workspace-blobs-${
-  //   AFFiNE.affine.canary ? 'canary' : 'prod'
-  // }`;
-  AFFiNE.storages.blob.bucket = 'fine-app';
-
-  // AFFiNE.use('copilot', {
-  //   storage: {
-  //     provider: 'cloudflare-r2',
-  //     bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
-  //   },
-  // });
-}
+// AFFiNE.use('copilot', {
+//   storage: {
+//     provider: 'cloudflare-r2',
+//     bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
+//   },
+// });
 
 //
 // /* AWS S3 Plugin */
@@ -152,8 +148,7 @@ if (env.R2_ACCESS_KEY_ID) {
 //    secretAccessKey: '',
 // })
 // /* Update the provider of storages */
-AFFiNE.storages.blob.provider = 'cloudflare-r2';
-AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+
 //
 /* OAuth Plugin */
 AFFiNE.use('oauth', {
@@ -167,8 +162,9 @@ AFFiNE.use('oauth', {
       },
     },
     google: {
-      clientId: '',
-      clientSecret: '',
+      clientId:
+        '54211129985-t7k92hecs8c1bajo0k9eq2vt93jf07p6.apps.googleusercontent.com',
+      clientSecret: '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',
       args: {
         // See https://developers.google.com/identity/protocols/oauth2
         scope: 'openid email profile',
