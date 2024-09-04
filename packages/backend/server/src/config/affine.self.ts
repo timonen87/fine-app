@@ -21,7 +21,7 @@ AFFiNE.metrics.enabled = !AFFiNE.node.test;
 
 if (env.R2_ACCESS_KEY_ID) {
   AFFiNE.use('cloudflare-r2', {
-    region: env.R2_ACCESS_KEY_ID,
+    region: env.REGIONAL_VK_S3_ACCOUNT!,
     credentials: {
       accessKeyId: env.R2_ACCESS_KEY_ID!,
       secretAccessKey: env.R2_SECRET_ACCESS_KEY!,

@@ -1,3 +1,4 @@
+import assert from 'node:assert';
 
 import { Logger } from '@nestjs/common';
 
@@ -8,7 +9,7 @@ export class R2StorageProvider extends S3StorageProvider {
   override readonly type = 'cloudflare-r2' as any /* cast 'r2' to 's3' */;
 
   constructor(config: R2StorageConfig, bucket: string) {
-    // assert(config.region, 'region is required for VK S3 storage provider');
+    assert(config.region, 'region is required for VK S3 storage provider');
     super(
       {
         ...config,
