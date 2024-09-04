@@ -33,7 +33,7 @@ export class S3StorageProvider implements StorageProvider {
     public readonly bucket: string
   ) {
     this.client = new S3Client({
-      region: 'auto',
+      region: 'ru-msk',
       // s3 client uses keep-alive by default to accelrate requests, and max requests queue is 50.
       // If some of them are long holding or dead without response, the whole queue will block.
       // By default no timeout is set for requests or connections, so we set them here.

@@ -19,7 +19,7 @@ const env = process.env;
 
 AFFiNE.metrics.enabled = !AFFiNE.node.test;
 
-if (env.VK_S3_ACCOUNT === 'true') {
+if (env.R2_OBJECT_STORAGE_ACCESS_KEY_ID) {
   AFFiNE.use('cloudflare-r2', {
     region: env.REGIONAL_VK_S3_ACCOUNT,
     credentials: {
