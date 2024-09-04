@@ -19,7 +19,6 @@
 // ##                       General settings                    ##
 // ###############################################################
 //
-const env = process.env;
 // /* The unique identity of the server */
 // AFFiNE.serverId = 'some-randome-uuid';
 //
@@ -58,17 +57,17 @@ AFFiNE.server.port = 3010;
 //
 // /* GraphQL configurations that control the behavior of the Apollo Server behind */
 // /* @see https://www.apollographql.com/docs/apollo-server/api/apollo-server */
-// AFFiNE.graphql = {
-//   /* Path to mount GraphQL API */
-//   path: '/graphql',
-//   buildSchemaOptions: {
-//     numberScalarMode: 'integer',
-//   },
-//   /* Whether allow client to query the schema introspection */
-//   introspection: true,
-//   /* Whether enable GraphQL Playground UI */
-//   playground: true,
-// }
+AFFiNE.graphql = {
+  /* Path to mount GraphQL API */
+  path: '/graphql',
+  buildSchemaOptions: {
+    numberScalarMode: 'integer',
+  },
+  /* Whether allow client to query the schema introspection */
+  introspection: true,
+  /* Whether enable GraphQL Playground UI */
+  playground: true,
+};
 //
 // /* Doc Store & Collaberation */
 // /* How long the buffer time of creating a new history snapshot when doc get updated */
@@ -107,43 +106,13 @@ AFFiNE.server.port = 3010;
 //
 // /* Cloudflare R2 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in Cloudflare R2 Storage Service */
-// AFFiNE.use('cloudflare-r2', {
-//   region: '',
-//   credentials: {
-//     accessKeyId: '',
-//     secretAccessKey: '',
-//   },
-// });
-
-if (env.R2_ACCESS_KEY_ID) {
-  AFFiNE.use('cloudflare-r2', {
-    region: env.REGIONAL_VK_S3_ACCOUNT,
-    credentials: {
-      accessKeyId: env.R2_ACCESS_KEY_ID,
-      secretAccessKey: env.R2_SECRET_ACCESS_KEY,
-    },
-  });
-
-  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
-  AFFiNE.storages.avatar.bucket = 'fine-app';
-  AFFiNE.storages.avatar.publicLinkFactory = key =>
-    `https://avatar.fineapp.pro/${key}`;
-
-  AFFiNE.storages.blob.provider = 'cloudflare-r2';
-  // AFFiNE.storages.blob.bucket = `workspace-blobs-${
-  //   AFFiNE.affine.canary ? 'canary' : 'prod'
-  // }`;
-  AFFiNE.storages.blob.bucket = 'fine-app';
-  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
-}
-
-// AFFiNE.use('copilot', {
-//   storage: {
-//     provider: 'cloudflare-r2',
-//     bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
-//   },
-// });
-
+AFFiNE.use('cloudflare-r2', {
+  region: '',
+  credentials: {
+    accessKeyId: '',
+    secretAccessKey: '',
+  },
+});
 //
 // /* AWS S3 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in AWS S3 Storage Service */
@@ -153,19 +122,40 @@ if (env.R2_ACCESS_KEY_ID) {
 //    secretAccessKey: '',
 // })
 // /* Update the provider of storages */
-
+AFFiNE.storages.blob.provider = 'cloudflare-r2';
+AFFiNE.storages.avatar.provider = 'cloudflare-r2';
 //
-/* OAuth Plugin */
+// /* OAuth Plugin */
 AFFiNE.use('oauth', {
   providers: {
+    github: {
+      clientId: '',
+      clientSecret: '',
+      // See https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
+      args: {
+        scope: 'user',
+      },
+    },
     google: {
-      clientId: env.OAUTH_GOOGLE_CLIENT_ID!,
-      clientSecret: env.OAUTH_GOOGLE_CLIENT_SECRET!,
+      clientId: '',
+      clientSecret: '',
       args: {
         // See https://developers.google.com/identity/protocols/oauth2
         scope: 'openid email profile',
         promot: 'select_account',
         access_type: 'offline',
+      },
+    },
+    oidc: {
+      // OpenID Connect
+      issuer: '',
+      clientId: '',
+      clientSecret: '',
+      args: {
+        scope: 'openid email profile',
+        claim_id: 'preferred_username',
+        claim_email: 'email',
+        claim_name: 'name',
       },
     },
   },
