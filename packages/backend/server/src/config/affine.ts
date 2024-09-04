@@ -15,6 +15,7 @@
 //   4. apply `./affine.env.ts` patches
 //
 //
+const env = process.env;
 // ###############################################################
 // ##                       General settings                    ##
 // ###############################################################
@@ -55,6 +56,7 @@ AFFiNE.server.port = 3010;
 //   ttr: 7 * 24 * 60 * 60, // 7 days
 // };
 //
+
 // /* GraphQL configurations that control the behavior of the Apollo Server behind */
 // /* @see https://www.apollographql.com/docs/apollo-server/api/apollo-server */
 AFFiNE.graphql = {
