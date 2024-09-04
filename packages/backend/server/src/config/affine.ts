@@ -106,13 +106,31 @@ AFFiNE.graphql = {
 //
 // /* Cloudflare R2 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in Cloudflare R2 Storage Service */
-AFFiNE.use('cloudflare-r2', {
-  region: '',
-  credentials: {
-    accessKeyId: '',
-    secretAccessKey: '',
-  },
-});
+if (env.R2_ACCESS_KEY_ID) {
+  AFFiNE.use('cloudflare-r2', {
+    region: env.REGIONAL_VK_S3_ACCOUNT!,
+    credentials: {
+      accessKeyId: env.R2_ACCESS_KEY_ID!,
+      secretAccessKey: env.R2_SECRET_ACCESS_KEY!,
+    },
+  });
+  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+  AFFiNE.storages.avatar.bucket = 'fine-app';
+  AFFiNE.storages.avatar.publicLinkFactory = key =>
+    `https://avatar.appfine.pro/${key}`;
+
+  AFFiNE.storages.blob.provider = 'cloudflare-r2';
+  AFFiNE.storages.blob.bucket = `workspace-blobs-${
+    AFFiNE.affine.canary ? 'canary' : 'prod'
+  }`;
+
+  AFFiNE.use('copilot', {
+    storage: {
+      provider: 'cloudflare-r2',
+      bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
+    },
+  });
+}
 //
 // /* AWS S3 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in AWS S3 Storage Service */
@@ -122,8 +140,8 @@ AFFiNE.use('cloudflare-r2', {
 //    secretAccessKey: '',
 // })
 // /* Update the provider of storages */
-AFFiNE.storages.blob.provider = 'cloudflare-r2';
-AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+// AFFiNE.storages.blob.provider = 'cloudflare-r2';
+// AFFiNE.storages.avatar.provider = 'cloudflare-r2';
 //
 // /* OAuth Plugin */
 AFFiNE.use('oauth', {
