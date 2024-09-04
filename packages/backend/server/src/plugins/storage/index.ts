@@ -23,7 +23,6 @@ registerStorageProvider('aws-s3', (config, bucket) => {
 @Plugin({
   name: 'cloudflare-r2',
   requires: [
-    'plugins.cloudflare-r2.region',
     'plugins.cloudflare-r2.credentials.accessKeyId',
     'plugins.cloudflare-r2.credentials.secretAccessKey',
   ],
