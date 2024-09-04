@@ -34,7 +34,7 @@ AFFiNE.server.host = 'localhost';
 AFFiNE.server.port = 3010;
 // /* The sub path of your server */
 // /* For example, if you set `AFFiNE.server.path = '/affine'`, then the server will be available at `${domain}/affine` */
-AFFiNE.server.path = '/affine';
+// AFFiNE.server.path = '/affine';
 // /* The external URL of your server, will be consist of protocol + host + port by default */
 // /* Useful when you want to customize the link to server resources for example the doc share link or email link */
 // AFFiNE.server.externalUrl = 'http://affine.local:8080'
@@ -115,24 +115,27 @@ AFFiNE.server.path = '/affine';
 //   },
 // });
 
-AFFiNE.use('cloudflare-r2', {
-  region: env.REGIONAL_VK_S3_ACCOUNT,
-  credentials: {
-    accessKeyId: env.R2_ACCESS_KEY_ID,
-    secretAccessKey: env.R2_SECRET_ACCESS_KEY,
-  },
-});
-AFFiNE.storages.avatar.provider = 'cloudflare-r2';
-AFFiNE.storages.avatar.bucket = 'fine-app';
-AFFiNE.storages.avatar.publicLinkFactory = key =>
-  `https://avatar.fineapp.pro/${key}`;
+if (env.R2_ACCESS_KEY_ID) {
+  AFFiNE.use('cloudflare-r2', {
+    region: env.REGIONAL_VK_S3_ACCOUNT,
+    credentials: {
+      accessKeyId: env.R2_ACCESS_KEY_ID,
+      secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+    },
+  });
 
-AFFiNE.storages.blob.provider = 'cloudflare-r2';
-// AFFiNE.storages.blob.bucket = `workspace-blobs-${
-//   AFFiNE.affine.canary ? 'canary' : 'prod'
-// }`;
-AFFiNE.storages.blob.bucket = 'fine-app';
-AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+  AFFiNE.storages.avatar.bucket = 'fine-app';
+  AFFiNE.storages.avatar.publicLinkFactory = key =>
+    `https://avatar.fineapp.pro/${key}`;
+
+  AFFiNE.storages.blob.provider = 'cloudflare-r2';
+  // AFFiNE.storages.blob.bucket = `workspace-blobs-${
+  //   AFFiNE.affine.canary ? 'canary' : 'prod'
+  // }`;
+  AFFiNE.storages.blob.bucket = 'fine-app';
+  AFFiNE.storages.avatar.provider = 'cloudflare-r2';
+}
 
 // AFFiNE.use('copilot', {
 //   storage: {

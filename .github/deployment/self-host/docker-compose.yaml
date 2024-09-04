@@ -29,7 +29,7 @@ services:
       - AFFINE_CONFIG_PATH=/root/.affine/config/
 
       - REDIS_SERVER_HOST=redis
-      - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_33
+      - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_new
       - NODE_ENV=production
       - OAUTH_GOOGLE_CLIENT_ID=54211129985-t7k92hecs8c1bajo0k9eq2vt93jf07p6.apps.googleusercontent.com
       - OAUTH_GOOGLE_CLIENT_SECRET=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
@@ -41,7 +41,6 @@ services:
       - MAILER_SENDER=timonen.as@gmail.com
       - MAILER_SECURE=true
 
-      - VK_S3_ACCOUNT=1
       - R2_ACCESS_KEY_ID=g9qBxGAaJkPWLHwnGGb1sP
       - R2_SECRET_ACCESS_KEY=Hn1VTjmwGAhMpWBhW5YFSGjnGsQUgwQnirUJ1p4LBRL
       - REGIONAL_VK_S3_ACCOUNT=ru-msk

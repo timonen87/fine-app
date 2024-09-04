@@ -8,12 +8,12 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
     get stable() {
       return {
         appBuildType: 'stable' as const,
-        serverUrlPrefix: 'https://app.affine.pro',
+        serverUrlPrefix: 'https://app.fineapp.pro',
         appVersion: packageJson.version,
         editorVersion: packageJson.devDependencies['@blocksuite/presets'],
-        githubUrl: 'https://github.com/toeverything/AFFiNE',
-        changelogUrl: 'https://affine.pro/what-is-new',
-        downloadUrl: 'https://affine.pro/download',
+        githubUrl: 'https://github.com/timonen87/fine-app',
+        changelogUrl: 'https://fineapp.pro/what-is-new',
+        downloadUrl: 'https://fineapp.pro/download',
         imageProxyUrl: '/api/worker/image-proxy',
         linkPreviewUrl: '/api/worker/link-preview',
         enablePreloading: true,
@@ -33,16 +33,16 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
       return {
         ...this.stable,
         appBuildType: 'beta' as const,
-        serverUrlPrefix: 'https://insider.affine.pro',
-        changelogUrl: 'https://github.com/toeverything/AFFiNE/releases',
+        serverUrlPrefix: 'https://insider.fineapp.pro',
+        changelogUrl: 'https://github.com/timonen87/fine-app/releases',
       };
     },
     get internal() {
       return {
         ...this.stable,
         appBuildType: 'internal' as const,
-        serverUrlPrefix: 'https://insider.affine.pro',
-        changelogUrl: 'https://github.com/toeverything/AFFiNE/releases',
+        serverUrlPrefix: 'https://insider.fineapp.pro',
+        changelogUrl: 'https://github.com/timonen87/fine-app/releases',
       };
     },
     // canary will be aggressive and enable all features
