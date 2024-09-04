@@ -19,6 +19,7 @@
 // ##                       General settings                    ##
 // ###############################################################
 //
+const env = process.env;
 // /* The unique identity of the server */
 // AFFiNE.serverId = 'some-randome-uuid';
 //
@@ -115,10 +116,10 @@ AFFiNE.server.path = '/affine';
 // });
 
 AFFiNE.use('cloudflare-r2', {
-  region: 'ru-msk',
+  region: env.REGIONAL_VK_S3_ACCOUNT,
   credentials: {
-    accessKeyId: 'g9qBxGAaJkPWLHwnGGb1sP',
-    secretAccessKey: 'Hn1VTjmwGAhMpWBhW5YFSGjnGsQUgwQnirUJ1p4LBRL',
+    accessKeyId: env.R2_ACCESS_KEY_ID,
+    secretAccessKey: env.R2_SECRET_ACCESS_KEY,
   },
 });
 AFFiNE.storages.avatar.provider = 'cloudflare-r2';
@@ -131,6 +132,7 @@ AFFiNE.storages.blob.provider = 'cloudflare-r2';
 //   AFFiNE.affine.canary ? 'canary' : 'prod'
 // }`;
 AFFiNE.storages.blob.bucket = 'fine-app';
+AFFiNE.storages.avatar.provider = 'cloudflare-r2';
 
 // AFFiNE.use('copilot', {
 //   storage: {
@@ -153,35 +155,14 @@ AFFiNE.storages.blob.bucket = 'fine-app';
 /* OAuth Plugin */
 AFFiNE.use('oauth', {
   providers: {
-    github: {
-      clientId: '',
-      clientSecret: '',
-      // See https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
-      args: {
-        scope: 'user',
-      },
-    },
     google: {
-      clientId:
-        '54211129985-t7k92hecs8c1bajo0k9eq2vt93jf07p6.apps.googleusercontent.com',
-      clientSecret: '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',
+      clientId: env.OAUTH_GOOGLE_CLIENT_ID!,
+      clientSecret: env.OAUTH_GOOGLE_CLIENT_SECRET!,
       args: {
         // See https://developers.google.com/identity/protocols/oauth2
         scope: 'openid email profile',
         promot: 'select_account',
         access_type: 'offline',
-      },
-    },
-    oidc: {
-      // OpenID Connect
-      issuer: '',
-      clientId: '',
-      clientSecret: '',
-      args: {
-        scope: 'openid email profile',
-        claim_id: 'preferred_username',
-        claim_email: 'email',
-        claim_name: 'name',
       },
     },
   },
