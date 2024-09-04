@@ -41,10 +41,12 @@ services:
       - MAILER_SENDER=timonen.as@gmail.com
       - MAILER_SECURE=true
 
-      - R2_ACCESS_KEY_ID=g9qBxGAaJkPWLHwnGGb1sP
-      - R2_SECRET_ACCESS_KEY=Hn1VTjmwGAhMpWBhW5YFSGjnGsQUgwQnirUJ1p4LBRL
+      - R2_ACCESS_KEY_ID=iYin8cGQYBQCGbfoUbR3Na
+      - R2_SECRET_ACCESS_KEY=8a5grvzJF7S4Mq8ijStA1cNRHS7BUaoywXxZiNVrdjzU
       - REGIONAL_VK_S3_ACCOUNT=ru-msk
-      - SSL_ENABLED=false
+
+      # Access Key ID: iYin8cGQYBQCGbfoUbR3Na
+      # Secret Key: 8a5grvzJF7S4Mq8ijStA1cNRHS7BUaoywXxZiNVrdjzU
 
       # - AFFINE_ADMIN_EMAIL=${AFFINE_ADMIN_EMAIL}
       # - AFFINE_ADMIN_PASSWORD=${AFFINE_ADMIN_PASSWORD}
