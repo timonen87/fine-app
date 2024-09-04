@@ -45,7 +45,7 @@ export class S3StorageProvider implements StorageProvider {
     this.client = new S3Client({
       ...config,
       endpoint: 'https://fine-app.hb.ru-msk.vkcloud-storage.ru',
-      region: 'msk-ru',
+      region: 'ru-msk',
       apiVersion: 'latest',
     });
     this.logger = new Logger(`${S3StorageProvider.name}:${bucket}`);
