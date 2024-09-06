@@ -38,15 +38,19 @@ services:
       - MAILER_PORT=465
       - MAILER_USER=timonen.as@gmail.com
       - MAILER_PASSWORD=dmjlguvuqxunggfr
-      - MAILER_SENDER=timonen.as@gmail.com
+      - MAILER_SENDER=info@notionai.pro
       - MAILER_SECURE=true
+      - AFFINE_SERVER_EXTERNAL_URL=http://notionai.pro:3010
 
-      - R2_ACCESS_KEY_ID=iYin8cGQYBQCGbfoUbR3Na
-      - R2_SECRET_ACCESS_KEY=8a5grvzJF7S4Mq8ijStA1cNRHS7BUaoywXxZiNVrdjzU
-      - REGIONAL_VK_S3_ACCOUNT=ru-msk
+      # - R2_ACCESS_KEY_ID=iYin8cGQYBQCGbfoUbR3Na
+      # - R2_SECRET_ACCESS_KEY=8a5grvzJF7S4Mq8ijStA1cNRHS7BUaoywXxZiNVrdjzU
+      # - REGIONAL_VK_S3_ACCOUNT=ru-msk
 
       # Access Key ID: iYin8cGQYBQCGbfoUbR3Na
       # Secret Key: 8a5grvzJF7S4Mq8ijStA1cNRHS7BUaoywXxZiNVrdjzU
+
+      # - R2_ACCESS_KEY_ID=g9qBxGAaJkPWLHwnGGb1sP
+      # - R2_SECRET_ACCESS_KEY=Hn1VTjmwGAhMpWBhW5YFSGjnGsQUgwQnirUJ1p4LBRL
 
       # - AFFINE_ADMIN_EMAIL=${AFFINE_ADMIN_EMAIL}
       # - AFFINE_ADMIN_PASSWORD=${AFFINE_ADMIN_PASSWORD}
