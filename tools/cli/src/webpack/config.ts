@@ -77,11 +77,11 @@ export const getPublicPath = (buildFlags: BuildFlags) => {
   }
 
   if (BUILD_TYPE === 'canary') {
-    return `https://dev.fineapp.pro/`;
+    return `https://dev.notionai.pro/`;
   } else if (BUILD_TYPE === 'beta') {
-    return `https://beta.fineapp.pro/`;
+    return `https://beta.notionai.pro/`;
   } else if (BUILD_TYPE === 'stable') {
-    return `https://prod.fineapp.pro/`;
+    return `http://localhost:3010/`;
   }
   return publicPath;
 };
@@ -405,7 +405,7 @@ export const createConfiguration: (
       proxy: [
         {
           context: '/api/worker/',
-          target: 'https://affine.fail',
+          target: 'https://fornote.fail',
           changeOrigin: true,
           secure: false,
         },

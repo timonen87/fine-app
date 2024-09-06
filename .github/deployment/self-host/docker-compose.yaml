@@ -1,38 +1,4 @@
 services:
-  affine-front:
-  # image: ghcr.io/toeverything/affine-graphql:stable
-  image: ghcr.io/timonen87/notionai-front:stable
-
-  container_name: affine_front
-  ports:
-    - '3010:3010'
-  depends_on:
-    affine-server:
-      condition: service_healthy
-  volumes:
-    - ~/.affine/app/static:/root/.affine/app/static
-
-  logging:
-    driver: 'json-file'
-    options:
-      max-size: '1000m'
-  restart: unless-stopped
-  environment:
-    - REDIS_SERVER_HOST=redis
-    - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_12
-    - NODE_ENV=production
-
-    - OAUTH_GOOGLE_CLIENT_ID=54211129985-t7k92hecs8c1bajo0k9eq2vt93jf07p6.apps.googleusercontent.com
-    - OAUTH_GOOGLE_CLIENT_SECRET=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
-
-    - MAILER_HOST=smtp.gmail.com
-    - MAILER_PORT=465
-    - MAILER_USER=timonen.as@gmail.com
-    - MAILER_PASSWORD=dmjlguvuqxunggfr
-    - MAILER_SENDER=info@notionai.pro
-    - MAILER_SECURE=true
-    - DEPLOY_HOST=http://notionai.pro
-
   affine-server:
     # image: ghcr.io/toeverything/affine-graphql:stable
     image: ghcr.io/timonen87/notionai-server:stable
@@ -81,6 +47,18 @@ services:
       - AFFINE_ADMIN_EMAIL=timonen.as@gmail.com
       - AFFINE_ADMIN_PASSWORD=13Tarantul
 
+  affine-front:
+    image: ghcr.io/timonen87/notionai-front:stable
+    container_name: affine_front
+    ports:
+      - '3010:3010'
+    depends_on:
+      - affine-server
+    restart: on-failure
+    environment:
+      - AFFINE_SERVER_EXTERNAL_URL=http://affine-server:5556/
+      - DEPLOY_HOST=http://localhost:3010
+
   redis:
     image: redis
     container_name: affine_redis
@@ -108,13 +86,14 @@ services:
       POSTGRES_PASSWORD: affine
       POSTGRES_DB: affine
       PGDATA: /var/lib/postgresql/data/pgdata
-  watchtower:
-    image: containrrr/watchtower
-    restart: unless-stopped
-    container_name: watchtower
-    environment:
-      - WATCHTOWER_POLL_INTERVAL=1800
-      - WATCHTOWER_CLEANUP=true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
+
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   restart: unless-stopped
+  #   container_name: watchtower
+  #   environment:
+  #     - WATCHTOWER_POLL_INTERVAL=1800
+  #     - WATCHTOWER_CLEANUP=true
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /root/.docker/config.json:/config.json
