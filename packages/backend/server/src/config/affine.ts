@@ -15,7 +15,7 @@
 //   4. apply `./affine.env.ts` patches
 //
 //
-const env = process.env;
+// const env = process.env;
 // ###############################################################
 // ##                       General settings                    ##
 // ###############################################################
@@ -59,17 +59,17 @@ AFFiNE.server.port = 3010;
 
 // /* GraphQL configurations that control the behavior of the Apollo Server behind */
 // /* @see https://www.apollographql.com/docs/apollo-server/api/apollo-server */
-AFFiNE.graphql = {
-  /* Path to mount GraphQL API */
-  path: '/graphql',
-  buildSchemaOptions: {
-    numberScalarMode: 'integer',
-  },
-  /* Whether allow client to query the schema introspection */
-  introspection: true,
-  /* Whether enable GraphQL Playground UI */
-  playground: true,
-};
+// AFFiNE.graphql = {
+//   /* Path to mount GraphQL API */
+//   path: '/graphql',
+//   buildSchemaOptions: {
+//     numberScalarMode: 'integer',
+//   },
+//   /* Whether allow client to query the schema introspection */
+//   introspection: true,
+//   /* Whether enable GraphQL Playground UI */
+//   playground: true,
+// };
 //
 // /* Doc Store & Collaberation */
 // /* How long the buffer time of creating a new history snapshot when doc get updated */
@@ -108,30 +108,30 @@ AFFiNE.graphql = {
 //
 // /* Cloudflare R2 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in Cloudflare R2 Storage Service */
-if (env.R2_ACCESS_KEY_ID) {
-  AFFiNE.use('aws-s3', {
-    credentials: {
-      accessKeyId: env.R2_ACCESS_KEY_ID!,
-      secretAccessKey: env.R2_SECRET_ACCESS_KEY!,
-    },
-  });
-  AFFiNE.storages.avatar.provider = 'aws-s3';
-  AFFiNE.storages.avatar.bucket = 'fine-app';
-  // AFFiNE.storages.avatar.publicLinkFactory = key =>
-  //   `https://avatar.appfine.pro/${key}`;
+// if (env.R2_ACCESS_KEY_ID) {
+//   AFFiNE.use('aws-s3', {
+//     credentials: {
+//       accessKeyId: env.R2_ACCESS_KEY_ID!,
+//       secretAccessKey: env.R2_SECRET_ACCESS_KEY!,
+//     },
+//   });
+//   AFFiNE.storages.avatar.provider = 'aws-s3';
+//   AFFiNE.storages.avatar.bucket = 'fine-app';
+//   // AFFiNE.storages.avatar.publicLinkFactory = key =>
+//   //   `https://avatar.appfine.pro/${key}`;
 
-  AFFiNE.storages.blob.provider = 'aws-s3';
-  AFFiNE.storages.blob.bucket = `workspace-blobs-${
-    AFFiNE.affine.canary ? 'canary' : 'prod'
-  }`;
+//   AFFiNE.storages.blob.provider = 'aws-s3';
+//   AFFiNE.storages.blob.bucket = `workspace-blobs-${
+//     AFFiNE.affine.canary ? 'canary' : 'prod'
+//   }`;
 
-  AFFiNE.use('copilot', {
-    storage: {
-      provider: 'aws-s3',
-      bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
-    },
-  });
-}
+//   AFFiNE.use('copilot', {
+//     storage: {
+//       provider: 'aws-s3',
+//       bucket: `workspace-copilot-${AFFiNE.affine.canary ? 'canary' : 'prod'}`,
+//     },
+//   });
+// }
 //
 // /* AWS S3 Plugin */
 // /* Enable if you choose to store workspace blobs or user avatars in AWS S3 Storage Service */
@@ -145,40 +145,40 @@ if (env.R2_ACCESS_KEY_ID) {
 // AFFiNE.storages.avatar.provider = 'cloudflare-r2';
 //
 // /* OAuth Plugin */
-AFFiNE.use('oauth', {
-  providers: {
-    github: {
-      clientId: '',
-      clientSecret: '',
-      // See https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
-      args: {
-        scope: 'user',
-      },
-    },
-    google: {
-      clientId: '',
-      clientSecret: '',
-      args: {
-        // See https://developers.google.com/identity/protocols/oauth2
-        scope: 'openid email profile',
-        promot: 'select_account',
-        access_type: 'offline',
-      },
-    },
-    oidc: {
-      // OpenID Connect
-      issuer: '',
-      clientId: '',
-      clientSecret: '',
-      args: {
-        scope: 'openid email profile',
-        claim_id: 'preferred_username',
-        claim_email: 'email',
-        claim_name: 'name',
-      },
-    },
-  },
-});
+// AFFiNE.use('oauth', {
+//   providers: {
+//     github: {
+//       clientId: '',
+//       clientSecret: '',
+//       // See https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
+//       args: {
+//         scope: 'user',
+//       },
+//     },
+//     google: {
+//       clientId: '',
+//       clientSecret: '',
+//       args: {
+//         // See https://developers.google.com/identity/protocols/oauth2
+//         scope: 'openid email profile',
+//         promot: 'select_account',
+//         access_type: 'offline',
+//       },
+//     },
+//     oidc: {
+//       // OpenID Connect
+//       issuer: '',
+//       clientId: '',
+//       clientSecret: '',
+//       args: {
+//         scope: 'openid email profile',
+//         claim_id: 'preferred_username',
+//         claim_email: 'email',
+//         claim_name: 'name',
+//       },
+//     },
+//   },
+// });
 //
 // /* Copilot Plugin */
 // AFFiNE.use('copilot', {

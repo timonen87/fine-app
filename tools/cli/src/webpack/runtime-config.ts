@@ -8,12 +8,12 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
     get stable() {
       return {
         appBuildType: 'stable' as const,
-        serverUrlPrefix: 'https://app.fineapp.pro',
+        serverUrlPrefix: 'https://notionai.pro',
         appVersion: packageJson.version,
         editorVersion: packageJson.devDependencies['@blocksuite/presets'],
         githubUrl: 'https://github.com/timonen87/fine-app',
-        changelogUrl: 'https://fineapp.pro/what-is-new',
-        downloadUrl: 'https://fineapp.pro/download',
+        changelogUrl: 'https://notionai.pro/what-is-new',
+        downloadUrl: 'https://notionai.pro/download',
         imageProxyUrl: '/api/worker/image-proxy',
         linkPreviewUrl: '/api/worker/link-preview',
         enablePreloading: true,
@@ -33,7 +33,7 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
       return {
         ...this.stable,
         appBuildType: 'beta' as const,
-        serverUrlPrefix: 'https://insider.fineapp.pro',
+        serverUrlPrefix: 'https://insider.notionai.pro',
         changelogUrl: 'https://github.com/timonen87/fine-app/releases',
       };
     },
@@ -41,7 +41,7 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
       return {
         ...this.stable,
         appBuildType: 'internal' as const,
-        serverUrlPrefix: 'https://insider.fineapp.pro',
+        serverUrlPrefix: 'https://insider.notionai.pro',
         changelogUrl: 'https://github.com/timonen87/fine-app/releases',
       };
     },
@@ -50,7 +50,7 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
       return {
         ...this.stable,
         appBuildType: 'canary' as const,
-        serverUrlPrefix: 'https://canaryfineapp.pro',
+        serverUrlPrefix: 'https://canary.notionai.pro',
         changelogUrl: 'https://github.com/toeverything/AFFiNE/releases',
         enableInfoModal: true,
         enableOrganize: true,

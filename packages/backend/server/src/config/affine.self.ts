@@ -15,7 +15,7 @@
 //    }
 //    ```
 // ====================================================================================
-// const env = process.env;
+const env = process.env;
 
 AFFiNE.metrics.enabled = !AFFiNE.node.test;
 
