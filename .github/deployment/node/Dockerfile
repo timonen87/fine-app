@@ -9,7 +9,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 
-CMD ["node", "--import", "./scripts/register.js", "./dist/index.js"]
+
 
 
 FROM openresty/openresty:1.25.3.2-0-buster
@@ -25,4 +25,5 @@ RUN mkdir -p /var/log/nginx && \
   rm /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
-CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
+CMD ["node", "--import", "./scripts/register.js", "./dist/index.js"]
+# CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
