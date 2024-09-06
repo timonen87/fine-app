@@ -81,7 +81,7 @@ export const getPublicPath = (buildFlags: BuildFlags) => {
   } else if (BUILD_TYPE === 'beta') {
     return `https://beta.notionai.pro/`;
   } else if (BUILD_TYPE === 'stable') {
-    return `http://localhost:3010/`;
+    return `https://notionai.pro/`;
   }
   return publicPath;
 };
