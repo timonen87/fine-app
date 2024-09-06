@@ -9,5 +9,5 @@ COPY ./.github/deployment/front/affine.nginx.conf /etc/nginx/conf.d/affine.nginx
 RUN mkdir -p /var/log/nginx && \
   rm /etc/nginx/conf.d/default.conf
 
-EXPOSE 8080
+EXPOSE 3010
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
