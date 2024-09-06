@@ -1,4 +1,4 @@
-name: Deploy Notion Ai image
+name: Build Web Notion Ai image
 
 on:
   workflow_call:
