@@ -1,7 +1,6 @@
 
 
 FROM node:20-bookworm-slim
-FROM openresty/openresty:1.25.3.2-0-buster
 
 COPY ./packages/backend/server /app
 COPY ./packages/frontend/web/dist /app/static
@@ -21,5 +20,5 @@ RUN mkdir -p /var/log/nginx && \
 
 EXPOSE 3010
 
-CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
+
 CMD ["node", "--import", "./scripts/register.js", "./dist/index.js"]
