@@ -3,7 +3,6 @@ FROM node:20-bookworm-slim
 COPY ./packages/backend/server /app
 COPY ./packages/frontend/web/dist ./dist
 COPY ./packages/frontend/admin/dist ./admin
-COPY ./packages/frontend/mobile/dist ./mobile
 
 WORKDIR /app
 
