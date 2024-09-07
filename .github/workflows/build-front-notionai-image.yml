@@ -34,7 +34,7 @@ jobs:
         env:
           BUILD_TYPE: ${{ github.event.inputs.flavor }}
           PUBLIC_PATH: '/'
-          SELF_HOSTED: true
+          SELF_HOSTED: false
           MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN }}
       - name: Upload web artifact
         uses: actions/upload-artifact@v4
@@ -59,7 +59,7 @@ jobs:
         env:
           BUILD_TYPE: ${{ github.event.inputs.flavor }}
           PUBLIC_PATH: '/admin/'
-          SELF_HOSTED: true
+          SELF_HOSTED: false
           MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN }}
       - name: Upload admin artifact
         uses: actions/upload-artifact@v4
@@ -84,7 +84,7 @@ jobs:
         env:
           BUILD_TYPE: ${{ github.event.inputs.flavor }}
           PUBLIC_PATH: '/'
-          SELF_HOSTED: true
+          SELF_HOSTED: false
           MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN }}
 
       - name: Upload mobile artifact
