@@ -191,6 +191,18 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@timonen87'
 
+      - name: Download selfhost web artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: selfhost-web
+          path: ./packages/frontend/web/dist
+
+      - name: Download selfhost admin artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: selfhost-admin
+          path: ./packages/frontend/admin/dist
+
       - name: Install Node.js dependencies
         run: |
           yarn config set --json supportedArchitectures.cpu '["x64", "arm64", "arm"]'

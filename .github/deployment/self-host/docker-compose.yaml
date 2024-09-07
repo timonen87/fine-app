@@ -3,7 +3,7 @@ version: '3.8'
 services:
   affine-server:
     # image: ghcr.io/toeverything/affine-graphql:stable
-    image: ghcr.io/toeverything/affine-graphql:canary
+    image: ghcr.io/timonen87/notionai-server:canary
     container_name: affine_server
     command:
       ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
