@@ -59,32 +59,32 @@ services:
     networks:
       - backend
 
-  # affine-front:
-  #   # image: ghcr.io/toeverything/affine-front:canary
-  #   image: ghcr.io/timonen87/notionai-front:canary
+  affine-front:
+    # image: ghcr.io/toeverything/affine-front:canary
+    image: ghcr.io/timonen87/notionai-front:canary
 
-  #   container_name: affine_front
-  #   ports:
-  #     - '8080:8080'
-  #   # expose:
-  #   #   - '8080'
-  #   depends_on:
-  #     - affine-server
-  #   restart: on-failure
-  #   volumes:
-  #     # custom configurations
-  #     - ~/.affine/self-host/front:/root/.affine/front
-  #   environment:
-  #     # - DEPLOY_HOST=localhost:8080
-  #     - SELF_HOSTED=false
-  #     - AFFINE_ENV=canary
-  #     - AFFINE_SERVER_PORT=3010
-  #     - AFFINE_SERVER_HOST=localhost
-  #     - AFFINE_SERVER_HTTPS=false
-  #     - REDIS_SERVER_HOST=redis
+    container_name: affine_front
+    ports:
+      - '8080:8080'
+    # expose:
+    #   - '8080'
+    depends_on:
+      - affine-server
+    restart: on-failure
+    volumes:
+      # custom configurations
+      - ~/.affine/self-host/front:/root/.affine/front
+    environment:
+      # - DEPLOY_HOST=localhost:8080
+      - SELF_HOSTED=false
+      - BUILD_TYPE=canary
+      - AFFINE_SERVER_PORT=3010
+      - AFFINE_SERVER_HOST=localhost
+      - AFFINE_SERVER_HTTPS=false
+      - REDIS_SERVER_HOST=redis
 
-  #   networks:
-  #     - frontend
+    networks:
+      - frontend
 
   # traefik:
   #   build:
