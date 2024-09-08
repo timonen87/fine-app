@@ -1,0 +1,94 @@
+# log:
+#   level: INFO
+
+# entryPoints:
+#   web:
+#     # http
+#     address: ':8080'
+#     http:
+#       # https://doc.traefik.io/traefik/routing/entrypoints/#entrypoint
+#       redirections:
+#         entryPoint:
+#           to: web-secure
+
+#   # web-secure:
+#   #   # https
+#   #   address: ':443'
+#   web-secure:
+#     # https
+#     address: ':3010'
+
+#   # flower:
+#   #   address: ':5555'
+
+# certificatesResolvers:
+#   letsencrypt:
+#     # https://doc.traefik.io/traefik/https/acme/#lets-encrypt
+#     acme:
+#       email: 'timonen@notionai.pro'
+#       storage: /etc/traefik/acme/acme.json
+#       # https://doc.traefik.io/traefik/https/acme/#httpchallenge
+#       httpChallenge:
+#         entryPoint: web
+
+# http:
+#   routers:
+#     web-secure-router:
+#       rule: 'Host(`notionai.pro`) || Host(`www.notionai.pro`)'
+#       entryPoints:
+#         - web-secure
+#       middlewares:
+#         - csrf
+#       service: django
+#       tls:
+#         # https://doc.traefik.io/traefik/routing/routers/#certresolver
+#         certResolver: letsencrypt
+
+#     # flower-secure-router:
+#     #   rule: 'Host(`notionai.pro`)'
+#     #   entryPoints:
+#     #     - flower
+#     #   service: flower
+#     #   tls:
+#     #     # https://doc.traefik.io/traefik/master/routing/routers/#certresolver
+#     #     certResolver: letsencrypt
+
+#     web-media-router:
+#       rule: '(Host(`notionai.pro`) || Host(`www.notionai.pro`)  && PathPrefix(`/static/`)'
+
+#       entryPoints:
+#         - web-secure
+#       middlewares:
+#         - csrf
+#       service: affine-server
+#       tls:
+#         certResolver: letsencrypt
+
+#   middlewares:
+#     csrf:
+#       # https://doc.traefik.io/traefik/master/middlewares/http/headers/#hostsproxyheaders
+#       # https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+#       headers:
+#         hostsProxyHeaders: ['X-CSRFToken']
+
+#   services:
+#     affine-server:
+#       loadBalancer:
+#         servers:
+#           - url: http://affine-server::5000
+
+#     # flower:
+#     #   loadBalancer:
+#     #     servers:
+#     #       - url: http://flower:5555
+
+#     affine-server:
+#       loadBalancer:
+#         servers:
+#           - url: http://nginx:8080
+
+# providers:
+#   # https://doc.traefik.io/traefik/master/providers/file/
+#   file:
+#     filename: /etc/traefik/traefik.yml
+#     watch: true
