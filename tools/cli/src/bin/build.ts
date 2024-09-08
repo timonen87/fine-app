@@ -18,7 +18,7 @@ const getChannel = () => {
     case 'beta':
     case 'stable':
     case 'internal':
-      return 'buildType';
+      return buildType;
     case '':
       throw new Error('BUILD_TYPE is not set');
     default: {
