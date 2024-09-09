@@ -10,6 +10,8 @@ services:
     ports:
       - '5555:5555'
       - '3010:3010'
+    expose:
+      - '8080'
     depends_on:
       redis:
         condition: service_healthy
@@ -39,6 +41,66 @@ services:
       - REDIS_SERVER_HOST=redis
 
       - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_13
+      - NODE_ENV=development
+
+      - OAUTH_GOOGLE_CLIENT_ID=54211129985-t7k92hecs8c1bajo0k9eq2vt93jf07p6.apps.googleusercontent.com
+      - OAUTH_GOOGLE_CLIENT_SECRET=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
+
+      - MAILER_HOST=smtp.gmail.com
+      - MAILER_PORT=465
+      - MAILER_USER=timonen.as@gmail.com
+      - MAILER_PASSWORD=dmjlguvuqxunggfr
+      - MAILER_SENDER=info@notionai.pro
+      - MAILER_SECURE=true
+
+      - R2_ACCESS_KEY_ID=iYin8cGQYBQCGbfoUbR3Na
+      - R2_SECRET_ACCESS_KEY=8a5grvzJF7S4Mq8ijStA1cNRHS7BUaoywXxZiNVrdjzU
+
+      - AFFINE_ADMIN_EMAIL=timonen.as@gmail.com
+      - AFFINE_ADMIN_PASSWORD=13Tarantul
+    networks:
+      - frontend
+      - backend
+
+  affine-front:
+    # image: ghcr.io/toeverything/affine-front:canary
+    image: ghcr.io/timonen87/notionai-front:canary
+
+    container_name: affine_front
+    # command:
+    #     ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
+
+    ports:
+      - '8080:8080'
+    expose:
+      - '3010'
+    depends_on:
+      - affine-server
+    restart: unless-stopped
+    volumes:
+      # custom configurations
+      - ~/.affine/self-host/app/dist:/root/.affine/app/dist
+      - ~/.affine/self-host/app/admin:/root/.affine/app/admin
+      - ~/.affine/self-host/app/mobile:/root/.affine/app/mobile
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1000m'
+    environment:
+      - BUILD_TYPE='canary'
+      - NODE_ENV=development
+      # - DEPLOY_HOST=localhost:8080
+      - AFFINE_CONFIG_PATH=/root/.affine/config/
+      # - AFFINE_ENV=canary
+      # - EXTERNAL_URL=https://notionai.pro
+
+      # - AFFINE_SERVER_PORT=3010
+      # - AFFINE_SERVER_HOST=localhost
+      # - AFFINE_SERVER_HTTPS=false
+
+      - REDIS_SERVER_HOST=redis
+
+      - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_13
       - NODE_ENV=production
 
       - OAUTH_GOOGLE_CLIENT_ID=54211129985-t7k92hecs8c1bajo0k9eq2vt93jf07p6.apps.googleusercontent.com
@@ -57,34 +119,8 @@ services:
       - AFFINE_ADMIN_EMAIL=timonen.as@gmail.com
       - AFFINE_ADMIN_PASSWORD=13Tarantul
     networks:
-      - backend
-
-  affine-front:
-    # image: ghcr.io/toeverything/affine-front:canary
-    image: ghcr.io/timonen87/notionai-front:canary
-
-    container_name: affine_front
-    ports:
-      - '8080:8080'
-    # expose:
-    #   - '8080'
-    depends_on:
-      - affine-server
-    restart: on-failure
-    volumes:
-      # custom configurations
-      - ~/.affine/self-host/front:/root/.affine/front
-    environment:
-      # - DEPLOY_HOST=localhost:8080
-      - SELF_HOSTED=false
-      - BUILD_TYPE=canary
-      - AFFINE_SERVER_PORT=3010
-      - AFFINE_SERVER_HOST=localhost
-      - AFFINE_SERVER_HTTPS=false
-      - REDIS_SERVER_HOST=redis
-
-    networks:
       - frontend
+      - backend
 
   # traefik:
   #   build:

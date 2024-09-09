@@ -77,7 +77,7 @@ export const getPublicPath = (buildFlags: BuildFlags) => {
   }
 
   if (BUILD_TYPE === 'canary') {
-    return `/`;
+    return `https://dev.notionai.pro/`;
   } else if (BUILD_TYPE === 'beta') {
     return `https://beta.notionai.pro/`;
   } else if (BUILD_TYPE === 'stable') {
