@@ -23,11 +23,6 @@ export async function createApp() {
     logger: AFFiNE.affine.stable ? ['log'] : ['verbose'],
   });
 
-  app.enableCors({
-    origin: ['http://localhost:8080', 'http://notionai.pro'],
-    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-    credentials: true,
-  });
   app.use(serverTimingAndCache);
 
   app.use(
