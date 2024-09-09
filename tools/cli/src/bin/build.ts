@@ -45,7 +45,7 @@ const flags = {
   channel: getChannel(),
   coverage: process.env.COVERAGE === 'true',
   entry,
-  static: false,
+  static: true,
 } satisfies BuildFlags;
 
 buildI18N();
@@ -61,3 +61,20 @@ webpack(createWebpackConfig(cwd!, flags), (err, stats) => {
     process.exit(1);
   }
 });
+
+// try {
+//   // @ts-expect-error no types
+//   await import('@affine/templates/build-edgeless');
+//   const config = createWebpackConfig(cwd, flags);
+//   if (flags.static) {
+//     config.watch = false;
+//   }
+//   const compiler = webpack(config);
+//   // Start webpack
+//   const devServer = new WebpackDevServer(config.devServer, compiler);
+
+//   await devServer.start();
+// } catch (error) {
+//   console.error('Error during build:', error);
+//   process.exit(1);
+// }
