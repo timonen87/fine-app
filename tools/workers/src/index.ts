@@ -1,8 +1,10 @@
 const ALLOW_ORIGIN = [
-  'https://affine.pro',
-  'https://app.affine.pro',
-  'https://insider.affine.pro',
-  'https://affine.fail',
+  'https://notionai.pro',
+  'https://app.notionai.pro',
+  'https://insider.notionai.pro',
+  'https://notionai.fail',
+  'http://localhost:3010',
+  'http://localhost:8080',
 ];
 
 function isString(s: any): boolean {
