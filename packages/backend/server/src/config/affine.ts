@@ -37,7 +37,7 @@ AFFiNE.server.port = 3010;
 // AFFiNE.server.path = '/affine';
 // /* The external URL of your server, will be consist of protocol + host + port by default */
 // /* Useful when you want to customize the link to server resources for example the doc share link or email link */
-// AFFiNE.server.externalUrl = 'http://affine.local:8080'
+AFFiNE.server.externalUrl = 'http://localhost:8080';
 //
 //
 // ###############################################################
@@ -59,17 +59,17 @@ AFFiNE.server.port = 3010;
 
 // /* GraphQL configurations that control the behavior of the Apollo Server behind */
 // /* @see https://www.apollographql.com/docs/apollo-server/api/apollo-server */
-// AFFiNE.graphql = {
-//   /* Path to mount GraphQL API */
-//   path: '/graphql',
-//   buildSchemaOptions: {
-//     numberScalarMode: 'integer',
-//   },
-//   /* Whether allow client to query the schema introspection */
-//   introspection: true,
-//   /* Whether enable GraphQL Playground UI */
-//   playground: true,
-// };
+AFFiNE.graphql = {
+  /* Path to mount GraphQL API */
+  path: '/graphql',
+  buildSchemaOptions: {
+    numberScalarMode: 'integer',
+  },
+  /* Whether allow client to query the schema introspection */
+  introspection: true,
+  /* Whether enable GraphQL Playground UI */
+  playground: true,
+};
 //
 // /* Doc Store & Collaberation */
 // /* How long the buffer time of creating a new history snapshot when doc get updated */

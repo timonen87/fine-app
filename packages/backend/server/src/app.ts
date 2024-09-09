@@ -17,20 +17,17 @@ export async function createApp() {
   const { AppModule } = await import('./app.module');
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: false,
+    cors: true,
     rawBody: true,
     bodyParser: true,
     logger: AFFiNE.affine.stable ? ['log'] : ['verbose'],
   });
 
-  // app.enableCors({
-  //   origin: [
-  //     'http://localhost:8080',
-  //     'http://notionai.pro',
-  //   ],
-  //   methods: "GET,PUT,POST,DELETE,UPDATE,OPTIONS",
-  //   credentials: true,
-  // });
+  app.enableCors({
+    origin: ['http://localhost:8080', 'http://notionai.pro'],
+    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+    credentials: true,
+  });
   app.use(serverTimingAndCache);
 
   app.use(
