@@ -19,7 +19,6 @@ app.enableCors({
   credentials: true,
 });
 const listeningHost = AFFiNE.deploy ? '0.0.0.0' : 'localhost';
-await app.listen(3010);
 await app.listen(AFFiNE.server.port, listeningHost);
 const url = app.get(URLHelper);
 
