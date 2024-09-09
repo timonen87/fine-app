@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-import * as p from '@clack/prompts';
 import { config } from 'dotenv';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
@@ -33,76 +32,76 @@ for (const file of files) {
   }
 }
 
-const buildFlags = process.argv.includes('--static')
-  ? { ...flags, debugBlockSuite: false, static: true }
-  : ((await p.group(
-      {
-        distribution: () =>
-          p.select({
-            message: 'Distribution',
-            options: [
-              {
-                value: 'browser',
-              },
-              {
-                value: 'desktop',
-              },
-              {
-                value: 'admin',
-              },
-              {
-                value: 'mobile',
-              },
-            ],
-            initialValue: 'browser',
-          }),
-        mode: () =>
-          p.select({
-            message: 'Mode',
-            options: [
-              {
-                value: 'development',
-              },
-              {
-                value: 'production',
-              },
-            ],
-            initialValue: 'development',
-          }),
-        channel: () =>
-          p.select({
-            message: 'Channel',
-            options: [
-              {
-                value: 'canary',
-              },
-              {
-                value: 'beta',
-              },
-              {
-                value: 'stable',
-              },
-            ],
-            initialValue: 'canary',
-          }),
-        coverage: () =>
-          p.confirm({
-            message: 'Enable coverage',
-            initialValue: process.env.COVERAGE === 'true',
-          }),
-        debugBlockSuite: () =>
-          p.confirm({
-            message: 'Debug blocksuite locally?',
-            initialValue: false,
-          }),
-      },
-      {
-        onCancel: () => {
-          p.cancel('Operation cancelled.');
-          process.exit(0);
-        },
-      }
-    )) as BuildFlags & { debugBlockSuite: boolean });
+// const buildFlags = process.argv.includes('--static')
+//   ? { ...flags, debugBlockSuite: false, static: true }
+//   : ((await p.group(
+//       {
+//         distribution: () =>
+//           p.select({
+//             message: 'Distribution',
+//             options: [
+//               {
+//                 value: 'browser',
+//               },
+//               {
+//                 value: 'desktop',
+//               },
+//               {
+//                 value: 'admin',
+//               },
+//               {
+//                 value: 'mobile',
+//               },
+//             ],
+//             initialValue: 'browser',
+//           }),
+//         mode: () =>
+//           p.select({
+//             message: 'Mode',
+//             options: [
+//               {
+//                 value: 'development',
+//               },
+//               {
+//                 value: 'production',
+//               },
+//             ],
+//             initialValue: 'development',
+//           }),
+//         channel: () =>
+//           p.select({
+//             message: 'Channel',
+//             options: [
+//               {
+//                 value: 'canary',
+//               },
+//               {
+//                 value: 'beta',
+//               },
+//               {
+//                 value: 'stable',
+//               },
+//             ],
+//             initialValue: 'canary',
+//           }),
+//         coverage: () =>
+//           p.confirm({
+//             message: 'Enable coverage',
+//             initialValue: process.env.COVERAGE === 'true',
+//           }),
+//         debugBlockSuite: () =>
+//           p.confirm({
+//             message: 'Debug blocksuite locally?',
+//             initialValue: false,
+//           }),
+//       },
+//       {
+//         onCancel: () => {
+//           p.cancel('Operation cancelled.');
+//           process.exit(0);
+//         },
+//       }
+//     )) as BuildFlags & { debugBlockSuite: boolean });
 
 // flags.distribution = buildFlags.distribution;
 // flags.mode = buildFlags.mode;
@@ -129,26 +128,26 @@ process.env.DISTRIBUTION = flags.distribution;
 //   };
 // }
 
-if (buildFlags.debugBlockSuite) {
-  const { config } = await import('dotenv');
-  const envLocal = config({
-    path: join(cwd, '.env.local'),
-  });
+// if (buildFlags.debugBlockSuite) {
+//   const { config } = await import('dotenv');
+//   const envLocal = config({
+//     path: join(cwd, '.env.local'),
+//   });
 
-  const localBlockSuite = await p.text({
-    message: 'local blocksuite PATH',
-    initialValue: envLocal.error
-      ? undefined
-      : envLocal.parsed?.LOCAL_BLOCK_SUITE,
-  });
-  if (typeof localBlockSuite !== 'string') {
-    throw new Error('local blocksuite PATH is required');
-  }
-  if (!existsSync(localBlockSuite)) {
-    throw new Error(`local blocksuite not found: ${localBlockSuite}`);
-  }
-  flags.localBlockSuite = localBlockSuite;
-}
+//   const localBlockSuite = await p.text({
+//     message: 'local blocksuite PATH',
+//     initialValue: envLocal.error
+//       ? undefined
+//       : envLocal.parsed?.LOCAL_BLOCK_SUITE,
+//   });
+//   if (typeof localBlockSuite !== 'string') {
+//     throw new Error('local blocksuite PATH is required');
+//   }
+//   if (!existsSync(localBlockSuite)) {
+//     throw new Error(`local blocksuite not found: ${localBlockSuite}`);
+//   }
+//   flags.localBlockSuite = localBlockSuite;
+// }
 
 console.info(flags);
 
