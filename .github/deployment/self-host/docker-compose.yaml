@@ -2,16 +2,17 @@ version: '3.8'
 
 services:
   affine-server:
-    # image: ghcr.io/toeverything/affine-graphql:stable
+    # image: ghcr.io/timonen87/fine-app:stable
     image: ghcr.io/timonen87/notionai-server:canary
+
     container_name: affine_server
     command:
       ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
     ports:
       - '5555:5555'
       - '3010:3010'
-    expose:
-      - '8080'
+    # expose:
+    #   - '8080'
     depends_on:
       redis:
         condition: service_healthy
@@ -33,6 +34,7 @@ services:
       - AFFINE_CONFIG_PATH=/root/.affine/config/
       # - AFFINE_ENV=canary
       # - EXTERNAL_URL=https://notionai.pro
+      - AFFINE_SERVER_EXTERNAL_URL=http://localhost:8080
 
       - AFFINE_SERVER_PORT=3010
       - AFFINE_SERVER_HOST=localhost
@@ -58,49 +60,64 @@ services:
 
       - AFFINE_ADMIN_EMAIL=timonen.as@gmail.com
       - AFFINE_ADMIN_PASSWORD=13Tarantul
-    networks:
-      - frontend
-      - backend
+    # networks:
+    #   - frontend
+    #   - backend
 
-  affine-front:
-    # image: ghcr.io/toeverything/affine-front:canary
-    image: ghcr.io/timonen87/notionai-front:canary
+  # affine-front:
+  #   # image: ghcr.io/toeverything/affine-front:canary
+  #   image: ghcr.io/timonen87/notionai-front:canary
 
-    container_name: affine_front
-    # command:
-    #     ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
+  #   container_name: affine_front
+  #   # command:
+  #   #     ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
 
-    ports:
-      - '8080:8080'
-    expose:
-      - '3010'
-    depends_on:
-      - affine-server
-    restart: unless-stopped
-    volumes:
-      # custom configurations
-      - ~/.affine/self-host/app/dist:/root/.affine/dist
-      # - ~/.affine/self-host/app/admin:/root/.affine/admin
-      # - ~/.affine/self-host/app/mobile:/root/.affine/mobile
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '1000m'
-    environment:
-      - BUILD_TYPE='canary'
-      - NODE_ENV=development
-      - DEPLOY_HOST=localhost:8080
-      - AFFINE_CONFIG_PATH=/root/.affine/config/
-      # - AFFINE_ENV=canary
-      # - EXTERNAL_URL=https://notionai.pro
+  #   ports:
+  #     - '8080:8080'
+  #   # expose:
+  #   #   - '3010'
+  #   depends_on:
+  #     - affine-server
+  #   restart: unless-stopped
+  #   volumes:
+  #     # custom configurations
+  #     - ~/.affine/self-host/app/dist:/root/.affine/dist
+  #     - ~/.affine/self-host/app/admin:/root/.affine/admin
+  #     - ~/.affine/self-host/app/mobile:/root/.affine/mobile
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '1000m'
+  #   environment:
+  #     # - BUILD_TYPE='canary'
+  #     # - NODE_ENV=development
+  #     - DEPLOY_HOST=localhost:8080
+  #     - AFFINE_CONFIG_PATH=/root/.affine/config/
+  #     - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_13
+  #     - AFFINE_ENV=canary
+  #     # - EXTERNAL_URL=https://notionai.pro
 
-      # - AFFINE_SERVER_PORT=3010
-      # - AFFINE_SERVER_HOST=localhost
-      # - AFFINE_SERVER_HTTPS=false
+  #     - AFFINE_SERVER_PORT=3010
+  #     - AFFINE_SERVER_HOST=localhost
+  #     - AFFINE_SERVER_HTTPS=false
 
-    networks:
-      - frontend
-      - backend
+  # networks:
+  #   - frontend
+
+  # nginx:
+  #   build:
+  #     context: .
+  #     dockerfile:  ./Dockerfile
+  #   image: affine_nginx
+  #   depends_on:
+  #     - affine-front
+  #   ports:
+  #     - '8080:8080'
+  #   networks:
+  #     - frontend
+
+  #   volumes:
+  #     - ~/.affine/self-host/nginx:/nginx
 
   # traefik:
   #   build:
@@ -128,8 +145,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - backend
+    # networks:
+    #   - backend
 
   postgres:
     image: postgres
@@ -147,36 +164,19 @@ services:
       POSTGRES_PASSWORD: affine
       POSTGRES_DB: affine
       PGDATA: /var/lib/postgresql/data/pgdata
-    networks:
-      - backend
+    # networks:
+    #   - backend
+# networks:
+#   frontend:
+#   backend:
 
-  # nginx:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile
-  #   image: affine_nginx
-  #   depends_on:
-  #     - affine-server
-  #   # ports:
-  #   #   - '5555:5555'
-  #   #   - '3010:3010'
-  #   networks:
-  #     - frontend
-
-  #   volumes:
-  #     - ~/.affine/self-host/nginx:/nginx
-
-networks:
-  frontend:
-  backend:
-
-  # watchtower:
-  #   image: containrrr/watchtower
-  #   restart: unless-stopped
-  #   container_name: watchtower
-  #   environment:
-  #     - WATCHTOWER_POLL_INTERVAL=1800
-  #     - WATCHTOWER_CLEANUP=true
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /root/.docker/config.json:/config.json
+# watchtower:
+#   image: containrrr/watchtower
+#   restart: unless-stopped
+#   container_name: watchtower
+#   environment:
+#     - WATCHTOWER_POLL_INTERVAL=1800
+#     - WATCHTOWER_CLEANUP=true
+#   volumes:
+#     - /var/run/docker.sock:/var/run/docker.sock
+#     - /root/.docker/config.json:/config.json
