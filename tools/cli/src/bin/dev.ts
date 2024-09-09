@@ -3,11 +3,10 @@ import { join } from 'node:path';
 
 import { config } from 'dotenv';
 import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
 
 import { getCwdFromDistribution, projectRoot } from '../config/cwd.cjs';
 import type { BuildFlags } from '../config/index.js';
-import { watchI18N } from '../util/i18n.js';
+import { buildI18N } from '../util/i18n.js';
 import { createWebpackConfig } from '../webpack/webpack.config.js';
 
 const flags: BuildFlags = {
@@ -151,23 +150,38 @@ process.env.DISTRIBUTION = flags.distribution;
 
 console.info(flags);
 
-if (!flags.static) {
-  watchI18N();
-}
+// if (!flags.static) {
+//   watchI18N();
+//   buildI18N();
+// }
 
-try {
-  // @ts-expect-error no types
-  await import('@affine/templates/build-edgeless');
-  const config = createWebpackConfig(cwd, flags);
-  if (flags.static) {
-    config.watch = false;
+// try {
+//   // @ts-expect-error no types
+//   await import('@affine/templates/build-edgeless');
+//   const config = createWebpackConfig(cwd, flags);
+//   if (flags.static) {
+//     config.watch = false;
+//   }
+//   const compiler = webpack(config);
+//   // Start webpack
+//   const devServer = new WebpackDevServer(config.devServer, compiler);
+
+//   await devServer.start();
+// } catch (error) {
+//   console.error('Error during build:', error);
+//   process.exit(1);
+// }
+
+buildI18N();
+
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+webpack(createWebpackConfig(cwd!, flags), (err, stats) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
   }
-  const compiler = webpack(config);
-  // Start webpack
-  const devServer = new WebpackDevServer(config.devServer, compiler);
-
-  await devServer.start();
-} catch (error) {
-  console.error('Error during build:', error);
-  process.exit(1);
-}
+  if (stats?.hasErrors()) {
+    console.error(stats.toString('errors-only'));
+    process.exit(1);
+  }
+});
