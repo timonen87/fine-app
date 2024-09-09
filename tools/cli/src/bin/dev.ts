@@ -104,23 +104,30 @@ const buildFlags = process.argv.includes('--static')
       }
     )) as BuildFlags & { debugBlockSuite: boolean });
 
-flags.distribution = buildFlags.distribution;
-flags.mode = buildFlags.mode;
-flags.channel = buildFlags.channel;
-flags.coverage = buildFlags.coverage;
-flags.static = buildFlags.static;
+// flags.distribution = buildFlags.distribution;
+// flags.mode = buildFlags.mode;
+// flags.channel = buildFlags.channel;
+// flags.coverage = buildFlags.coverage;
+// flags.static = buildFlags.static;
+// flags.entry = undefined;
+
+(flags.distribution = 'browser'),
+  (flags.mode = 'development'),
+  (flags.channel = 'canary'),
+  (flags.coverage = true),
+  (flags.static = true);
 flags.entry = undefined;
 
 const cwd = getCwdFromDistribution(flags.distribution);
 
 process.env.DISTRIBUTION = flags.distribution;
 
-if (flags.distribution === 'desktop') {
-  flags.entry = {
-    app: join(cwd, 'index.tsx'),
-    shell: join(cwd, 'shell/index.tsx'),
-  };
-}
+// if (flags.distribution === 'desktop') {
+//   flags.entry = {
+//     app: join(cwd, 'index.tsx'),
+//     shell: join(cwd, 'shell/index.tsx'),
+//   };
+// }
 
 if (buildFlags.debugBlockSuite) {
   const { config } = await import('dotenv');

@@ -30,7 +30,7 @@ jobs:
       - name: Setup Node.js
         uses: ./.github/actions/setup-node
       - name: Build Core
-        run: yarn nx dev @affine/web --skip-nx-cache
+        run: yarn nx build @affine/web --skip-nx-cache
         env:
           PUBLIC_PATH: '/'
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
