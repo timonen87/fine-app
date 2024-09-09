@@ -33,7 +33,6 @@ export type GraphqlContext = {
           csrfPrevention: {
             requestHeaders: ['content-type'],
           },
-          typePaths: ['./**/*.graphql'],
           autoSchemaFile: join(
             fileURLToPath(import.meta.url),
             config.node.test
@@ -52,10 +51,6 @@ export type GraphqlContext = {
             res,
             isAdminQuery: false,
           }),
-          cors: {
-            credentials: true,
-            origin: true,
-          },
           includeStacktraceInErrorResponses: !config.node.prod,
           plugins: [new GQLLoggerPlugin()],
           formatError: (formattedError, error) => {

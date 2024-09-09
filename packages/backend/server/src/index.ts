@@ -8,19 +8,15 @@ import { createApp } from './app';
 import { URLHelper } from './fundamentals';
 
 const app = await createApp();
-// app.enableCors({
-//   origin: ['http://localhost:8080', 'http://notionai.pro'],
-//   methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-//   credentials: true,
-// });
-app.enableCors({
-  origin: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  credentials: true,
-});
 const listeningHost = AFFiNE.deploy ? '0.0.0.0' : 'localhost';
 await app.listen(AFFiNE.server.port, listeningHost);
 const url = app.get(URLHelper);
+
+app.enableCors({
+  origin: ['http://localhost:8080', 'http://notionai.pro'],
+  methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+  credentials: true,
+});
 
 const logger = new Logger('App');
 
