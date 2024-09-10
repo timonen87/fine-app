@@ -50,7 +50,7 @@ export function getRuntimeConfig(buildFlags: BuildFlags): RuntimeConfig {
       return {
         ...this.stable,
         appBuildType: 'canary' as const,
-        serverUrlPrefix: 'https://canary.notionai.pro',
+        serverUrlPrefix: 'http://localhost:3010',
         changelogUrl: 'https://github.com/toeverything/AFFiNE/releases',
         enableInfoModal: true,
         enableOrganize: true,

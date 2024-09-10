@@ -17,6 +17,8 @@ export function getBaseUrl(): string {
     // is nodejs
     return '';
   }
+
+  return runtimeConfig.serverUrlPrefix;
   const { protocol, hostname, port } = window.location;
   return `${protocol}//${hostname}${port ? `:${port}` : ''}`;
   // return `${protocol}//${process.env.AFFINE_SERVER_HOST}${process.env.AFFINE_SERVER_PORT ? `:${process.env.AFFINE_SERVER_PORT}` : ''}`;
