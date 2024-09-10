@@ -11,8 +11,6 @@ services:
     ports:
       - '5555:5555'
       - '3010:3010'
-    # expose:
-    #   - '8080'
     depends_on:
       redis:
         condition: service_healthy
@@ -67,20 +65,13 @@ services:
   affine-front:
     # image: ghcr.io/toeverything/affine-front:canary
     image: ghcr.io/timonen87/notionai-front:canary
-
     container_name: affine_front
-    # command:
-    #     ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
-
     ports:
       - '8080:8080'
-    # expose:
-    #   - '3010'
     depends_on:
       - affine-server
     restart: unless-stopped
     volumes:
-      # custom configurations
       - ~/.affine/self-host/app/dist:/root/.affine/dist
       - ~/.affine/self-host/app/admin:/root/.affine/admin
       - ~/.affine/self-host/app/mobile:/root/.affine/mobile

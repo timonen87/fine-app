@@ -8,8 +8,9 @@ export function getAffineCloudBaseUrl(): string {
   if (environment.isDesktop) {
     return runtimeConfig.serverUrlPrefix;
   }
-  const { protocol, hostname, port } = window.location;
-  return `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+  // const { protocol, hostname, port } = window.location;
+  // return `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+  return 'http://localhost:3010';
 }
 
 const logger = new DebugLogger('affine:fetch');
