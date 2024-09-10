@@ -80,9 +80,9 @@ services:
       options:
         max-size: '1000m'
     environment:
-      - BUILD_TYPE='canary'
-      - NODE_ENV=development
-      - DEPLOY_HOST=localhost:8080
+      # - BUILD_TYPE='canary'
+      # - NODE_ENV=development
+      # - DEPLOY_HOST=localhost:8080
       - AFFINE_CONFIG_PATH=/root/.affine/config/
       - DATABASE_URL=postgres://affine:affine@postgres:5432/affine_db_13
       # - AFFINE_ENV=canary

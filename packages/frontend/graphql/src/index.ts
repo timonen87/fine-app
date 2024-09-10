@@ -18,10 +18,9 @@ export function getBaseUrl(): string {
     return '';
   }
 
-  return runtimeConfig.serverUrlPrefix;
   const { protocol, hostname, port } = window.location;
   return `${protocol}//${hostname}${port ? `:${port}` : ''}`;
   // return `${protocol}//${process.env.AFFINE_SERVER_HOST}${process.env.AFFINE_SERVER_PORT ? `:${process.env.AFFINE_SERVER_PORT}` : ''}`;
 }
 
-export const fetcher = gqlFetcherFactory('http://localhost:3010' + '/graphql');
+export const fetcher = gqlFetcherFactory(getBaseUrl() + '/graphql');

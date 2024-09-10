@@ -37,7 +37,7 @@ AFFiNE.server.port = 3010;
 // AFFiNE.server.path = '/affine';
 // /* The external URL of your server, will be consist of protocol + host + port by default */
 // /* Useful when you want to customize the link to server resources for example the doc share link or email link */
-AFFiNE.server.externalUrl = 'http://localhost:8080';
+// AFFiNE.server.externalUrl = 'http://localhost:8080';
 //
 //
 // ###############################################################
