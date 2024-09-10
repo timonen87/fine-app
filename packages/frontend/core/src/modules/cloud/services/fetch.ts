@@ -50,7 +50,7 @@ export class FetchService extends Service {
       abortController.abort('timeout');
     }, timeout);
 
-    const res = await fetch(new URL(input, getAffineCloudBaseUrl()), {
+    const res = await fetch(new URL(input, 'http://localhost:3010'), {
       ...init,
       signal: abortController.signal,
     }).catch(err => {
