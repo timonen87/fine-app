@@ -6,7 +6,9 @@ services:
       ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
     ports:
       - '3010:3010'
-      - '5555:5555'
+    #   - '5555:5555'
+    expose:
+      - '80'
     depends_on:
       redis:
         condition: service_healthy
@@ -14,15 +16,16 @@ services:
         condition: service_healthy
     volumes:
       # custom configurations
-      - ~/.affine/self-host/config:/root/.affine/config
+      - frontend_volume:/root/.affine/config
       # blob storage
-      - ~/.affine/self-host/storage:/root/.affine/storage
+      - frontend_volume_storage:/root/.affine/storage
     logging:
       driver: 'json-file'
       options:
         max-size: '1000m'
     restart: unless-stopped
     environment:
+      # - AFFINE_SERVER_EXTERNAL_URL='http://localhost:8000'
       - NODE_OPTIONS="--import=./scripts/register.js"
       - AFFINE_CONFIG_PATH=/root/.affine/config/
       - REDIS_SERVER_HOST=redis
@@ -52,23 +55,25 @@ services:
       # Telemetry allows us to collect data on how you use the affine. This data will helps us improve the app and provide better features.
       # Uncomment next line if you wish to quit telemetry.
       # - TELEMETRY_ENABLE=false
+
   redis:
     image: redis
     container_name: affine_redis
     restart: unless-stopped
     volumes:
-      - ~/.affine/self-host/redis:/data
+      - redis_volume:/data
     healthcheck:
       test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
       interval: 10s
       timeout: 5s
       retries: 5
+
   postgres:
     image: postgres
     container_name: affine_postgres
     restart: unless-stopped
     volumes:
-      - ~/.affine/self-host/postgres:/var/lib/postgresql/data
+      - postgresql_volume:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U affine']
       interval: 10s
@@ -79,3 +84,37 @@ services:
       POSTGRES_PASSWORD: affine
       POSTGRES_DB: affine
       PGDATA: /var/lib/postgresql/data/pgdata
+
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+      # - "443:443"
+    volumes:
+      - ./nginx/nginx/:/etc/nginx/templates:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - ./certbot/www/:/var/www/certbot/:rw
+    # command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    depends_on:
+      - affine
+    # env_file:
+    #   - ./.env
+
+  # certbot:
+  #   image: certbot/certbot
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./certbot/conf/:/etc/letsencrypt/:rw
+  #     - ./certbot/www/:/var/www/certbot/:rw
+  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  postgresql_volume:
+  frontend_volume:
+  frontend_volume_storage:
+  certbot_certs:
+  redis_volume:
