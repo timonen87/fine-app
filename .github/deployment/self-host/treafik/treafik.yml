@@ -33,19 +33,10 @@ http:
         - web-secure
       middlewares:
         - csrf
-      service: frontend
+      service: affine
       tls:
         # https://doc.traefik.io/traefik/routing/routers/#certresolver
         certResolver: letsencrypt
-
-    # flower-secure-router:
-    #   rule: 'Host(`notionai.pro`)'
-    #   entryPoints:
-    #     - flower
-    #   service: flower
-    #   tls:
-    #     # https://doc.traefik.io/traefik/master/routing/routers/#certresolver
-    #     certResolver: letsencrypt
 
     web-media-router:
       rule: '(Host(`notionai.pro`) || Host(`www.notionai.pro`) || Host(`fine-app.hb.ru-msk.vkcs.cloud`)) && PathPrefix(`/media/`)'
