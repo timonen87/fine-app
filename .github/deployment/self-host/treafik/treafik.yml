@@ -28,7 +28,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: 'Host(`notion.pro`) || Host(`www.notion.pro`)'
+      rule: 'Host(`notionai.pro`) || Host(`www.notionai.pro`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -39,7 +39,7 @@ http:
         certResolver: letsencrypt
 
     # flower-secure-router:
-    #   rule: 'Host(`notion.pro`)'
+    #   rule: 'Host(`notionai.pro`)'
     #   entryPoints:
     #     - flower
     #   service: flower
@@ -48,7 +48,7 @@ http:
     #     certResolver: letsencrypt
 
     web-media-router:
-      rule: '(Host(`notion.pro`) || Host(`www.notion.pro`) || Host(`fine-app.hb.ru-msk.vkcs.cloud`)) && PathPrefix(`/media/`)'
+      rule: '(Host(`notionai.pro`) || Host(`www.notionai.pro`) || Host(`fine-app.hb.ru-msk.vkcs.cloud`)) && PathPrefix(`/media/`)'
 
       entryPoints:
         - web-secure
