@@ -61,18 +61,18 @@ services:
     env_file:
       - ./.env
 
-  traefik:
-    image: affine_production_traefik
-    build:
-      context: ./treafik
-      dockerfile: Dockerfile
-    depends_on:
-      - affine
-    volumes:
-      - production_traefik:/etc/traefik/acme
-    ports:
-      - '0.0.0.0:80:80'
-      - '0.0.0.0:443:443'
+  # traefik:
+  #   image: affine_production_traefik
+  #   build:
+  #     context: ./treafik
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - affine
+  #   volumes:
+  #     - production_traefik:/etc/traefik/acme
+  #   ports:
+  #     - '0.0.0.0:80:80'
+  #     - '0.0.0.0:443:443'
 
   nginx:
     image: nginx:latest
@@ -80,9 +80,9 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    # ports:
-    #   - '80:80'
-    #   - '443:443'
+    ports:
+      - '80:80'
+      - '443:443'
     depends_on:
       - affine
     volumes:
