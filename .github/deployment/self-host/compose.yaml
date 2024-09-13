@@ -86,4 +86,35 @@ services:
     depends_on:
       - affine
     volumes:
-      - production_media:/usr/share/nginx/media:ro
+      - ./nginx/:/etc/nginx/templates:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - ./certbot/www/:/var/www/certbot/:rw
+      - frontend_volume:/usr/share/nginx/html/:ro
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    env_file:
+      - ./.env
+
+  # nginx:
+  #   image: nginx:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/:/etc/nginx/templates:rw
+  #     - ./certbot/conf/:/etc/letsencrypt/:rw
+  #     - ./certbot/www/:/var/www/certbot/:rw
+  #     - frontend_volume:/usr/share/nginx/html/:ro
+  #   command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+  #   depends_on:
+  #     - frontend
+  #   env_file:
+  #     - ./.env
+
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - ./certbot/www/:/var/www/certbot/:rw
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
