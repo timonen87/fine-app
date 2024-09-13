@@ -77,9 +77,9 @@ services:
   nginx:
     image: nginx:latest
     restart: unless-stopped
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./nginx
+    #   dockerfile: Dockerfile
     ports:
       - '80:80'
       - '443:443'
@@ -89,7 +89,7 @@ services:
       - ./nginx/:/etc/nginx/templates:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
       - ./certbot/www/:/var/www/certbot/:rw
-      - frontend_volume:/usr/share/nginx/html/:ro
+      # - frontend_volume:/usr/share/nginx/html/:ro
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     env_file:
       - ./.env
