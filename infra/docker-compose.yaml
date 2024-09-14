@@ -90,9 +90,12 @@ services:
     volumes:
       # production
       # - ./nginx/:/etc/nginx/templates:rw
-      # localhost
       # - ./nginx/cert.pem:/etc/cert.pem
       # - ./nginx/key.pem:/etc/key.pem
+
+      # localhost
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     ports:
       - '80:80'

@@ -13,7 +13,7 @@ await app.listen(AFFiNE.server.port, listeningHost);
 const url = app.get(URLHelper);
 
 app.enableCors({
-  origin: ['http://localhost:8080', 'http://notionai.pro'],
+  origin: ['https://localhost:8080', 'https://notionai.pro'],
   methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
   credentials: true,
 });
@@ -25,5 +25,5 @@ if (AFFiNE.node.dev) {
   logger.log('Startup Configuration:');
   logger.log(omit(globalThis.AFFiNE, 'ENV_MAP'));
 }
-logger.log(`Listening on http://${listeningHost}:${AFFiNE.server.port}`);
+logger.log(`Listening on https://${listeningHost}:${AFFiNE.server.port}`);
 logger.log(`And the public server should be recognized as ${url.home}`);
