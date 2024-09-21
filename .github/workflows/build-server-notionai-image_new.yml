@@ -137,6 +137,23 @@ jobs:
       - build-admin-selfhost
       - build-server-native
     steps:
+    - name: Delete Old Artifacts
+      uses: actions/github-script@v6
+      id: artifact
+      with:
+        script: |
+          const res = await github.rest.actions.listArtifactsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          })
+        res.data.artifacts
+          .forEach(({ id }) => {
+            github.rest.actions.deleteArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: id,
+            })
+          })
       - uses: actions/checkout@v4
       - name: Download server dist
         uses: actions/download-artifact@v4
@@ -218,6 +235,8 @@ jobs:
 
       - name: Build graphql Dockerfile
         uses: docker/build-push-action@v6
+      
+              
         with:
           context: .
           push: true
