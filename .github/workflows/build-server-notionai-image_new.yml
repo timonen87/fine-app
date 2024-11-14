@@ -19,12 +19,12 @@ env:
 
 jobs:
   delete-artifacts:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: kolpav/purge-artifacts-action@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            expire-in: 0days
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          expire-in: 0days
   build-server:
     name: Build Server
     runs-on: ubuntu-latest
@@ -225,8 +225,7 @@ jobs:
 
       - name: Build graphql Dockerfile
         uses: docker/build-push-action@v6
-      
-              
+
         with:
           context: .
           push: true
@@ -234,4 +233,4 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           provenance: true
           file: .github/deployment/node/Dockerfile
-          tags: ghcr.io/timonen87/notionai-server-new:${{env.RELEASE_FLAVOR}}-${{ env.GIT_SHORT_HASH }},ghcr.io/timonen87/notionai-server:${{env.RELEASE_FLAVOR}}
+          tags: ghcr.io/timonen87/notionai-server-new:${{env.RELEASE_FLAVOR}}-${{ env.GIT_SHORT_HASH }},ghcr.io/timonen87/notionai-server-new:${{env.RELEASE_FLAVOR}}

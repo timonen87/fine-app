@@ -8,13 +8,13 @@ volumes:
 
 services:
   affine:
-    image: ghcr.io/toeverything/affine-graphql:canary
+    image: ghcr.io/timonen87/notionai-server:canary
     container_name: affine_selfhosted
     command:
       ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
-    # ports:
-    # - '3010:3010'
-    #   - '5555:5555'
+    ports:
+      - '3010:3010'
+      - '5555:5555'
     expose:
       - '80'
     depends_on:
@@ -83,21 +83,21 @@ services:
   #   env_file:
   #     - ./.env
 
-  nginx:
-    image: nginx:1.23.3
-    depends_on:
-      - affine
-    volumes:
-      # production
-      # - ./nginx/:/etc/nginx/templates:rw
-      # localhost
-      # - ./nginx/cert.pem:/etc/cert.pem
-      # - ./nginx/key.pem:/etc/key.pem
-    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
-    ports:
-      - '80:80'
-      - '443:443'
-
+  # nginx:
+  #   image: nginx:1.23.3
+  #   depends_on:
+  #     - affine
+  #   volumes:
+  #     # production
+  #     # - ./nginx/:/etc/nginx/templates:rw
+  #     # localhost
+  #     # - ./nginx/cert.pem:/etc/cert.pem
+  #     # - ./nginx/key.pem:/etc/key.pem
+  #   command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #
   # certbot:
   #   ports:
   #     - "6000:80"
